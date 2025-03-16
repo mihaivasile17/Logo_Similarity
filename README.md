@@ -199,4 +199,7 @@ for cluster_id, websites in clusters.items():
 
 ```
 
+---
+## Results
+
 ![results](https://github.com/user-attachments/assets/3d075973-fcf6-4def-bf5b-9408d4cba6ba)
