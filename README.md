@@ -21,6 +21,12 @@ pip install pyarrow fastparquet requests opencv-python numpy torch torchvision s
 ```
 
 ### **Logo download**
+Am inceput prin a incerca sa accesez fisierul de logo-uri: logos.snappy.parquet 
+ - pip install pyarrow fastparquet - pentru a putea citi din fisierul respectiv
+ - dupa rularea fisierul de logo-uri, observam ca acesta nu contine imagini ci doar domeniile web ale companiilor
+ - Clearbit oferă un API public gratuit ce permite obținerea logo-ului doar pe baza domeniului
+ - rulam script-ul creat pentru a salva logo-urile ca png prin intermediul Clearbit
+
 ```bash
 import os
 import pandas as pd
@@ -55,6 +61,11 @@ for index, row in df.iterrows():
 ```
 
 ### **Image processing**
+
+Am reusit sa downloadez 799 de logo-uri din fisierul dat, iar acum voi incerca sa preprocesez imaginile
+ - vom converti toate pozele la o rezolutie de 224X224
+ - transformam toate imaginile in format rgb
+
 ```bash
 import os
 import numpy as np
@@ -85,6 +96,10 @@ print("Toate imaginile au fost preprocesate și salvate!")
 ```
 
 ### **Extract specifications**
+Extragerea caracteristicilor cu ResNet50 (model CNN pre-antrenat)
+ - acest model ResNet50, trece imaginile prin el și obține vectori de caracteristici pentru fiecare logo
+ - Store the embeddings in a NumPy array
+
 ```bash
 import tensorflow as tf
 from tensorflow.keras.applications import ResNet50
@@ -135,6 +150,10 @@ print("Embeddings saved successfully!")
 ```
 
 ### **K-means algorithm**
+Căutare de logo-uri similare
+ - prima testare: după ce avem vectorii de caracteristici, putem folosi distanța cosinus pentru a găsi logo-uri similare
+ - a doua testare: implementam un alg de clusteres, K-means, unde aproximam un numar de 200 de clustere
+
 ```bash
 from sklearn.cluster import KMeans
 import numpy as np
@@ -165,6 +184,8 @@ print("K-Means clustering completed!")
 ```
 
 ### **Final results**
+Afisarea rezultatelor din clustere:
+
 ```bash
 import numpy as np
 
