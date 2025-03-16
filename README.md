@@ -1,2 +1,2 @@
 # Logo_Similarity
-Veridion_Internship_Challenges
+Veridion_Internship_Challenge
