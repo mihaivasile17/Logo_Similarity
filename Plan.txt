@@ -18,19 +18,3 @@ Extragerea caracteristicilor cu ResNet50 (model CNN pre-antrenat)
 Căutare de logo-uri similare
     - prima testare: după ce avem vectorii de caracteristici, putem folosi distanța cosinus pentru a găsi logo-uri similare
     - a doua testare: implementam un alg de clusteres, K-means, unde aproximam un numar de 200 de clustere
-
-Pentru a crea un demo interactiv, vom construi un API cu FastAPI și o interfață simplă cu Streamlit.
-    - Utilizatorul încarcă un logo prin interfață
-    - API-ul extrage embeddings pentru imaginea încărcată
-    - Comparăm embeddings-ul cu cele din baza de date
-    - Returnăm cele mai similare logo-uri
-
-Construirea unui Demo
-Creăm un API/web app simplu pentru testare: 
-    Un user încarcă un logo → returnăm logo-urile cele mai apropiate
-    - pip install fastapi uvicorn numpy torch torchvision pillow scikit-learn
-    - apy.py
-    - pip install streamlit requests
-    - app.py
-    - pornim api-ul: uvicorn api:app --reload
-    - deschidem aplicatia: streamlit run app.py
