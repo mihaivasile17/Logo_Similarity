@@ -198,3 +198,5 @@ for cluster_id, websites in clusters.items():
     print(f"Cluster {cluster_id}: {websites}")
 
 ```
+
+![results](https://github.com/user-attachments/assets/3d075973-fcf6-4def-bf5b-9408d4cba6ba)
