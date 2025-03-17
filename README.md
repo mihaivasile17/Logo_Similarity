@@ -9,8 +9,7 @@ This project aims to **match and group websites** based on the similarity of the
  - Extract logos from **company domains**  
  - Preprocess images (**resize, RGB conversion**)  
  - Extract **feature vectors** using **ResNet50**  
- - Find similar logos using **cosine similarity & clustering**  
- - Build an **API & web app** for easy testing  
+ - Find similar logos using **cosine similarity** (first version) & **clustering** (curent version)
 
 ---
 
