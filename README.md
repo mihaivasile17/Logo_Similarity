@@ -1,7 +1,7 @@
 # Logo Similarity  
 **Veridion Internship Challenge**  
 
-This project aims to **match and group websites** based on the similarity of their **logos**. Using **ResNet50** and **K-Means clustering**, we built a system that detects similar logos efficiently.
+This project aims to **match and group websites** based on the similarity of their **logos**. Using **ResNet50** and **K-Means clustering**, I built a system that detects similar logos efficiently.
 
 ---
 
@@ -21,12 +21,12 @@ pip install pyarrow fastparquet requests opencv-python numpy torch torchvision s
 
 ### **Logo download**
 I started by trying to figure out what exactly is in the logos.snappy.parquet file:
- - pip install pyarrow fastparquet - so we can read in the actual file
- - after we print the header from the file, we observe that the file is full with websites domains
- - I found Clearbit, which is offering a free API tool that can give us the logos, if we give the specific domain
- - we run the script and we will save the logos as pngs in the logos folder
+ - pip install pyarrow fastparquet - so I can read in the actual file
+ - after I printed the header from the file, I observed that the file is full with websites domains
+ - I found Clearbit, which is offering a free API tool that can give us the logos, if I give the specific domain
+ - Running the script saves the logos in the specific folder
 
-Update: To improve the logo similarity project, I added a fallback method for downloading the logos when Clearbit Api fails. Since some domains did not return a logo by using Clearbit, and we only got 799 logos initially, I implemented a method which uses Google Images. This was a success and I can confidently say that by sharing the final number of downloaded logos, which is 3415.
+Update: To improve the logo similarity project, I added a fallback method for downloading the logos when Clearbit Api fails. Since some domains did not return a logo by using Clearbit, and I only got 799 logos initially, I implemented a method which uses Google Images. This was a success and I can confidently say that by sharing the final number of downloaded logos, which is 3415.
 
 ![results_clearbit+google](https://github.com/user-attachments/assets/6614b798-8f25-4e0a-85c4-8a4530722f8c)
 
@@ -116,8 +116,8 @@ for index, row in df.iterrows():
 ### **Image processing**
 
 I managed to download 799 logos (3415 logos after implemented the fallback method) from the given file, and now I will try to process the images:
-- we will convert all the pictures to a resolution of 224X224
-- we will transform all the images into rgb format
+- I will convert all the pictures to a resolution of 224X224
+- All the images will be transformed into RGB format
 
 ![All_images_proc_saved](https://github.com/user-attachments/assets/ad422ebe-e8de-4ba5-a2a7-4cc9bd313387)
 
@@ -142,7 +142,7 @@ os.makedirs(processed_folder, exist_ok=True)
 # The size we will convert the images to
 IMG_SIZE = (224, 224)
 
-# We iterate through all the images in the folder and process them
+# Iterating through all the images in the folder and process them
 for img_name in tqdm(os.listdir(image_folder)):
     try:
         img_path = os.path.join(image_folder, img_name)
@@ -210,7 +210,7 @@ for img_name in tqdm(os.listdir(processed_folder)):
     if embedding is not None:
         features_dict[img_name] = embedding
 
-# Save embeddings to a NumPy file
+# Saving all embeddings into a NumPy file
 np.save("logo_embeddings.npy", features_dict)
 print("Embeddings saved successfully!")
 ```
@@ -219,7 +219,7 @@ print("Embeddings saved successfully!")
 Similar logo search
 - First method: After obtaining the feature vectors, I used cosine distance to find similar logos
     - using this method, I could tell from the results that the classification was not great, because I saw in the same cluster, car logos like mazda and infiniti which should not be together
-- So, I went to try another method. I implemented a clustering algorithm, more specific K-means clustering, where we approximate a number of 500 clusters for the total of 3415 images, because we can have a cluster with a single image inside.
+- So, I went to try another method. I implemented a clustering algorithm, more specific K-means clustering, where I approximated a number of 500 clusters for the total of 3415 images, because I can also have a cluster with a single image inside.
 
 ![k-means_clustering](https://github.com/user-attachments/assets/d561298a-0470-433c-ab54-483b9ffe1d44)
 
