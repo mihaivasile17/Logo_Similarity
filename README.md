@@ -32,6 +32,8 @@ Update: To improve the logo similarity project, I added a fallback method for do
 
 ![results_clearbit+google2](https://github.com/user-attachments/assets/dc9452f6-e778-4c25-b623-20ea22881228)
 
+Logo_download_script:
+
 ```bash
 import os
 import pandas as pd
@@ -122,6 +124,8 @@ I managed to download 799 logos (3415 logos after implemented the fallback metho
 Example of image transformation:
 ![image_proc_example](https://github.com/user-attachments/assets/9514ca13-25fc-4b10-883f-67a68a18d0e6)
 
+Image_processing_script:
+
 ```bash
 import os
 import numpy as np
@@ -159,6 +163,8 @@ Feature extraction with ResNet50 (pre-trained CNN model)
 ![extract_specs_example](https://github.com/user-attachments/assets/e6ca07d8-aaa5-4f88-9990-2c806b1e61cc)
 
 ![extract_specs_example2](https://github.com/user-attachments/assets/4ea1d4b1-8fa2-44a2-b184-bd4b65741cff)
+
+Feature_extraction_script:
 
 ```bash
 import tensorflow as tf
@@ -216,6 +222,8 @@ Similar logo search
 
 ![k-means_clustering](https://github.com/user-attachments/assets/d561298a-0470-433c-ab54-483b9ffe1d44)
 
+K-means_algorithm_script:
+
 ```bash
 from sklearn.cluster import KMeans
 import numpy as np
@@ -244,8 +252,10 @@ np.save("logo_clusters.npy", clusters)
 print("K-Means clustering completed!")
 ```
 
-### **Final results**
-Results from each cluster, sorted by cluster ID:
+---
+## Final results
+
+Final_result_script:
 
 ```bash
 import numpy as np
@@ -262,8 +272,8 @@ for cluster_id, websites in sorted_clusters:
     print(f"Cluster {cluster_id} ({len(websites)} logos): {websites}")
 ```
 
----
-## Final results
+Results from each cluster, sorted by cluster ID:
+
 Results old:
 ![resultsold](https://github.com/user-attachments/assets/3b939770-5b4d-4428-b823-f77bee3f635e)
 
@@ -273,4 +283,5 @@ Final results:
 ![final_results2](https://github.com/user-attachments/assets/e71ee5a1-0278-4243-8087-17e43a5b0ff7)
 
 We can see that there is room for improvements, because the results are not always as accurate as it should be:
+
 ![final_results3](https://github.com/user-attachments/assets/7962805b-b03b-4dbd-beb0-c5bfc30a5e70)
