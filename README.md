@@ -122,6 +122,7 @@ I managed to download 799 logos (3415 logos after implemented the fallback metho
 ![All_images_proc_saved](https://github.com/user-attachments/assets/ad422ebe-e8de-4ba5-a2a7-4cc9bd313387)
 
 Example of image transformation:
+
 ![image_proc_example](https://github.com/user-attachments/assets/9514ca13-25fc-4b10-883f-67a68a18d0e6)
 
 Image_processing_script:
@@ -255,7 +256,7 @@ print("K-Means clustering completed!")
 ---
 ## Final results
 
-Final_result_script:
+Printing_results_script:
 
 ```bash
 import numpy as np
@@ -274,10 +275,12 @@ for cluster_id, websites in sorted_clusters:
 
 Results from each cluster, sorted by cluster ID:
 
-Results old:
+Old results:
+
 ![resultsold](https://github.com/user-attachments/assets/3b939770-5b4d-4428-b823-f77bee3f635e)
 
 Final results:
+
 ![final_results](https://github.com/user-attachments/assets/98f20d94-5b17-4922-9187-02c4d24ab5cb)
 
 ![final_results2](https://github.com/user-attachments/assets/e71ee5a1-0278-4243-8087-17e43a5b0ff7)
