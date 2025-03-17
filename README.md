@@ -26,6 +26,8 @@ I started by trying to figure out what exactly is in the logos.snappy.parquet fi
  - I found Clearbit, which is offering a free API tool that can give us the logos, if we give the specific domain
  - we run the script and we will save the logos as pngs in the logos folder
 
+Update: To improve the logo similarity project, I added a fallback method for downloading the logos when Clearbit Api fails. Since some domains did not return a logo by using Clearbit, and we only got 799 logos initially, I implemented a method which uses Google Images. This was a success and I can confidently say that by sharing the final number of downloaded logos, which is 3415.
+
 ```bash
 import os
 import pandas as pd
@@ -95,9 +97,10 @@ print("Toate imaginile au fost preprocesate și salvate!")
 ```
 
 ### **Extract specifications**
-Feature extraction with ResNet50 (pre-trained CNN model)  
-- This ResNet50 model processes images and extracts feature vectors for each logo. 
-- Store the embeddings in a NumPy array.
+Feature extraction with ResNet50 (pre-trained CNN model)
+- I decided to use Keras ResNet50 for feature extraction instead of PyTorch, because I had better results with it
+- ResNet50 model processes images and extracts feature vectors for each logo
+- Store the vectors in a NumPy array
 
 ```bash
 import tensorflow as tf

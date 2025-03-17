@@ -4,15 +4,15 @@ import cv2
 from tqdm import tqdm
 from PIL import Image
 
-# Cream un nou folder unde vom salva imaginile procesate
+# We create a new folder where we will save the processed images
 image_folder = "logos/"
 processed_folder = "logos_processed/"
 os.makedirs(processed_folder, exist_ok=True)
 
-# Dimensiunea la care redimensionam imaginile
+# The size we will convert the images to
 IMG_SIZE = (224, 224)
 
-# Procesam toate imaginile
+# We iterate through all the images in the folder and process them
 for img_name in tqdm(os.listdir(image_folder)):
     try:
         img_path = os.path.join(image_folder, img_name)
@@ -20,6 +20,6 @@ for img_name in tqdm(os.listdir(image_folder)):
         img = img.resize(IMG_SIZE)
         img.save(os.path.join(processed_folder, img_name))
     except Exception as e:
-        print(f"Eroare la procesarea {img_name}: {e}")
+        print(f"Error at processing {img_name}: {e}")
 
-print("Toate imaginile au fost preprocesate și salvate!")
+print("All images saved and processed")

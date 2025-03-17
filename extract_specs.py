@@ -19,10 +19,10 @@ resnet_model.trainable = False
 # Function to extract features
 def extract_features(image_path):
     try:
-        # Load and preprocess the image
+        # Load and process the image
         img = load_img(image_path, target_size=(img_height, img_width))
         img_array = img_to_array(img)
-        img_array = np.expand_dims(img_array, axis=0)  # Expand dims for batch size
+        img_array = np.expand_dims(img_array, axis=0)
         img_array = preprocess_input(img_array)  # Apply ResNet preprocessing
 
         # Extract features
