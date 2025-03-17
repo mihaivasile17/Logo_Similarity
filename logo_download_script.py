@@ -25,7 +25,7 @@ def fetch_clearbit_logo(domain):
         pass
     return None
 
-# Google image scraping (in case we can't find the logo by using Clearbit) - fallback method
+# Google image scraping (in case I can't find the logo by using Clearbit) - fallback method
 def fetch_google_logo(domain):
     try:
         search_url = f"https://www.google.com/search?tbm=isch&q={urllib.parse.quote(domain + ' logo')}"

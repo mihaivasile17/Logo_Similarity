@@ -9,7 +9,7 @@ img_names = list(features.keys())
 embeddings = np.array(list(features.values()))
 
 # Apply K-Means clustering
-num_clusters = 200
+num_clusters = 500
 kmeans = KMeans(n_clusters=num_clusters, random_state=42, n_init=10)
 labels = kmeans.fit_predict(embeddings)
 

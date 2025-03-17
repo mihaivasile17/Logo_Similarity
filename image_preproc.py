@@ -4,7 +4,7 @@ import cv2
 from tqdm import tqdm
 from PIL import Image
 
-# We create a new folder where we will save the processed images
+# I create a new folder where we will save the processed images
 image_folder = "logos/"
 processed_folder = "logos_processed/"
 os.makedirs(processed_folder, exist_ok=True)
