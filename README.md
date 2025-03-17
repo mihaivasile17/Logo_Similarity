@@ -28,6 +28,10 @@ I started by trying to figure out what exactly is in the logos.snappy.parquet fi
 
 Update: To improve the logo similarity project, I added a fallback method for downloading the logos when Clearbit Api fails. Since some domains did not return a logo by using Clearbit, and we only got 799 logos initially, I implemented a method which uses Google Images. This was a success and I can confidently say that by sharing the final number of downloaded logos, which is 3415.
 
+![results_clearbit+google](https://github.com/user-attachments/assets/6614b798-8f25-4e0a-85c4-8a4530722f8c)
+
+![results_clearbit+google2](https://github.com/user-attachments/assets/dc9452f6-e778-4c25-b623-20ea22881228)
+
 ```bash
 import os
 import pandas as pd
@@ -113,6 +117,11 @@ I managed to download 799 logos (3415 logos after implemented the fallback metho
 - we will convert all the pictures to a resolution of 224X224
 - we will transform all the images into rgb format
 
+![All_images_proc_saved](https://github.com/user-attachments/assets/ad422ebe-e8de-4ba5-a2a7-4cc9bd313387)
+
+Example of image transformation:
+![image_proc_example](https://github.com/user-attachments/assets/9514ca13-25fc-4b10-883f-67a68a18d0e6)
+
 ```bash
 import os
 import numpy as np
@@ -146,6 +155,10 @@ Feature extraction with ResNet50 (pre-trained CNN model)
 - I decided to use Keras ResNet50 for feature extraction instead of PyTorch, because I had better results with it
 - ResNet50 model processes images and extracts feature vectors for each logo
 - We store the vectors in a NumPy array
+
+![extract_specs_example](https://github.com/user-attachments/assets/e6ca07d8-aaa5-4f88-9990-2c806b1e61cc)
+
+![extract_specs_example2](https://github.com/user-attachments/assets/4ea1d4b1-8fa2-44a2-b184-bd4b65741cff)
 
 ```bash
 import tensorflow as tf
@@ -201,6 +214,8 @@ Similar logo search
     - using this method, I could tell from the results that the classification was not great, because I saw in the same cluster, car logos like mazda and infiniti which should not be together
 - So, I went to try another method. I implemented a clustering algorithm, more specific K-means clustering, where we approximate a number of 500 clusters for the total of 3415 images, because we can have a cluster with a single image inside.
 
+![k-means_clustering](https://github.com/user-attachments/assets/d561298a-0470-433c-ab54-483b9ffe1d44)
+
 ```bash
 from sklearn.cluster import KMeans
 import numpy as np
@@ -249,5 +264,9 @@ for cluster_id, websites in sorted_clusters:
 
 ---
 ## Final results
+Results old:
+![resultsold](https://github.com/user-attachments/assets/3b939770-5b4d-4428-b823-f77bee3f635e)
 
-![results](https://github.com/user-attachments/assets/3d075973-fcf6-4def-bf5b-9408d4cba6ba)
+Final results:
+![final_results](https://github.com/user-attachments/assets/2bf7a5cb-40ad-41b8-b258-56feb5c3ed03)
+
