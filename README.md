@@ -20,11 +20,11 @@ pip install pyarrow fastparquet requests opencv-python numpy torch torchvision s
 ```
 
 ### **Logo download**
-Am inceput prin a incerca sa accesez fisierul de logo-uri: logos.snappy.parquet 
- - pip install pyarrow fastparquet - pentru a putea citi din fisierul respectiv
- - dupa rularea fisierul de logo-uri, observam ca acesta nu contine imagini ci doar domeniile web ale companiilor
- - Clearbit oferă un API public gratuit ce permite obținerea logo-ului doar pe baza domeniului
- - rulam script-ul creat pentru a salva logo-urile ca png prin intermediul Clearbit
+I started by trying to figure out what exactly is in the logos.snappy.parquet file:
+ - pip install pyarrow fastparquet - so we can read in the actual file
+ - after we print the header from the file, we observe that the file is full with websites domains
+ - I found Clearbit, which is offering a free API tool that can give us the logos, if we give the specific domain
+ - we run the script and we will save the logos as pngs in the logos folder
 
 ```bash
 import os
@@ -33,15 +33,15 @@ import requests
 from PIL import Image
 from io import BytesIO
 
-# Incarcam fisierul parquet ce contine logo-urile
+# We load the parquet file with the logos
 file_path = "logos.snappy.parquet"
 df = pd.read_parquet(file_path)
 
-# Cream un folder nou in care vom salva png-urile
+# We create a folder where we will save the logos
 output_dir = "logos"
 os.makedirs(output_dir, exist_ok=True)
 
-# Descarcam logo-urile
+# We download the logos by using Clearbit
 for index, row in df.iterrows():
     domain = row["domain"]
     logo_url = f"https://logo.clearbit.com/{domain}"
@@ -61,9 +61,9 @@ for index, row in df.iterrows():
 
 ### **Image processing**
 
-Am reusit sa downloadez 799 de logo-uri din fisierul dat, iar acum voi incerca sa preprocesez imaginile
- - vom converti toate pozele la o rezolutie de 224X224
- - transformam toate imaginile in format rgb
+I managed to download 799 logos from the given file, and now I will try to process the images:
+- we will convert all the pictures to a resolution of 224X224
+- we will transform all the images into rgb format
 
 ```bash
 import os
@@ -72,15 +72,15 @@ import cv2
 from tqdm import tqdm
 from PIL import Image
 
-# Cream un nou folder unde vom salva imaginile procesate
+# We create a new folder where we save the processed logos
 image_folder = "logos/"
 processed_folder = "logos_processed/"
 os.makedirs(processed_folder, exist_ok=True)
 
-# Dimensiunea la care redimensionam imaginile
+# We scale each logo at the 224x224 res
 IMG_SIZE = (224, 224)
 
-# Procesam toate imaginile
+# Image proccessing
 for img_name in tqdm(os.listdir(image_folder)):
     try:
         img_path = os.path.join(image_folder, img_name)
@@ -95,9 +95,9 @@ print("Toate imaginile au fost preprocesate și salvate!")
 ```
 
 ### **Extract specifications**
-Extragerea caracteristicilor cu ResNet50 (model CNN pre-antrenat)
- - acest model ResNet50, trece imaginile prin el și obține vectori de caracteristici pentru fiecare logo
- - Store the embeddings in a NumPy array
+Feature extraction with ResNet50 (pre-trained CNN model)  
+- This ResNet50 model processes images and extracts feature vectors for each logo. 
+- Store the embeddings in a NumPy array.
 
 ```bash
 import tensorflow as tf
@@ -112,10 +112,10 @@ from tqdm import tqdm
 img_height, img_width = 224, 224
 processed_folder = "logos_processed/"
 
-# Load pre-trained ResNet50 (without top layers)
+# Load pre-trained ResNet50
 resnet_model = ResNet50(include_top=False, input_shape=(img_height, img_width, 3), pooling='avg', weights='imagenet')
 
-# Freeze all layers (like in your Keras example)
+# Freeze all layers
 resnet_model.trainable = False
 
 # Function to extract features
@@ -124,12 +124,12 @@ def extract_features(image_path):
         # Load and preprocess the image
         img = load_img(image_path, target_size=(img_height, img_width))
         img_array = img_to_array(img)
-        img_array = np.expand_dims(img_array, axis=0)  # Expand dims for batch size
-        img_array = preprocess_input(img_array)  # Apply ResNet preprocessing
+        img_array = np.expand_dims(img_array, axis=0)
+        img_array = preprocess_input(img_array)
 
         # Extract features
         features = resnet_model.predict(img_array)
-        return features.flatten()  # Flatten to 1D vector
+        return features.flatten()  # Returned 1D vector
     except Exception as e:
         print(f"Error processing {image_path}: {e}")
         return None
@@ -149,9 +149,9 @@ print("Embeddings saved successfully!")
 ```
 
 ### **K-means algorithm**
-Căutare de logo-uri similare
- - prima testare: după ce avem vectorii de caracteristici, putem folosi distanța cosinus pentru a găsi logo-uri similare
- - a doua testare: implementam un alg de clusteres, K-means, unde aproximam un numar de 200 de clustere
+Similar Logo Search
+- First test: After obtaining the feature vectors, we can use cosine distance to find similar logos.  
+- Second test: We implement a clustering algorithm, K-means, where we approximate a number of 200 clusters.
 
 ```bash
 from sklearn.cluster import KMeans
@@ -183,7 +183,7 @@ print("K-Means clustering completed!")
 ```
 
 ### **Final results**
-Afisarea rezultatelor din clustere:
+Results from each cluster:
 
 ```bash
 import numpy as np
