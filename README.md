@@ -268,5 +268,9 @@ Results old:
 ![resultsold](https://github.com/user-attachments/assets/3b939770-5b4d-4428-b823-f77bee3f635e)
 
 Final results:
-![final_results](https://github.com/user-attachments/assets/2bf7a5cb-40ad-41b8-b258-56feb5c3ed03)
+![final_results](https://github.com/user-attachments/assets/98f20d94-5b17-4922-9187-02c4d24ab5cb)
 
+![final_results2](https://github.com/user-attachments/assets/e71ee5a1-0278-4243-8087-17e43a5b0ff7)
+
+We can see that there is room for improvements, because the results are not always as accurate as it should be:
+![final_results3](https://github.com/user-attachments/assets/7962805b-b03b-4dbd-beb0-c5bfc30a5e70)
