@@ -21,12 +21,12 @@ pip install pyarrow fastparquet requests opencv-python numpy torch torchvision s
 
 ### **Logo download**
 I started by trying to figure out what exactly is in the logos.snappy.parquet file:
- - pip install pyarrow fastparquet - so I can read in the actual file
+ - pip install pyarrow fastparquet - so I can read the actual file
  - after I printed the header from the file, I observed that the file is full with websites domains
- - I found Clearbit, which is offering a free API tool that can give us the logos, if I give the specific domain
+ - I found Clearbit, which is offering a free API tool that can give us the logos, if it has the specific domain
  - Running the script saves the logos in the specific folder
 
-Update: To improve the logo similarity project, I added a fallback method for downloading the logos when Clearbit Api fails. Since some domains did not return a logo by using Clearbit, and I only got 799 logos initially, I implemented a method which uses Google Images. This was a success and I can confidently say that by sharing the final number of downloaded logos, which is 3415.
+Update: To improve the logo similarity project, I added a fallback method for downloading the logos when Clearbit Api fails. Since some domains did not return any logo by using Clearbit and I only got 799 logos initially, I implemented a method which uses Google Images. This was a success and I can confidently say that by sharing the final number of downloaded logos, which is 3415.
 
 ![results_clearbit+google](https://github.com/user-attachments/assets/6614b798-8f25-4e0a-85c4-8a4530722f8c)
 
@@ -62,7 +62,7 @@ def fetch_clearbit_logo(domain):
         pass
     return None
 
-# Google image scraping (in case I can't find the logo by using Clearbit) - fallback method
+# Google images scraping (in case I can't find the logo by using Clearbit) - fallback method
 def fetch_google_logo(domain):
     try:
         search_url = f"https://www.google.com/search?tbm=isch&q={urllib.parse.quote(domain + ' logo')}"
@@ -71,7 +71,6 @@ def fetch_google_logo(domain):
 
         soup = BeautifulSoup(response.text, "html.parser")
         img_tags = soup.find_all("img")
-
         for img_tag in img_tags:
             img_url = img_tag.get("src")
             if img_url.startswith("data:image"):
@@ -115,8 +114,8 @@ for index, row in df.iterrows():
 
 ### **Image processing**
 
-I managed to download 799 logos (3415 logos after implemented the fallback method) from the given file, and now I will try to process the images:
-- I will convert all the pictures to a resolution of 224X224
+I managed to download 799 logos (3415 logos after I implemented the fallback method) from the given file, and now I will try to process the images:
+- All the images will be converted into a resolution of 224X224
 - All the images will be transformed into RGB format
 
 ![All_images_proc_saved](https://github.com/user-attachments/assets/ad422ebe-e8de-4ba5-a2a7-4cc9bd313387)
@@ -134,7 +133,7 @@ import cv2
 from tqdm import tqdm
 from PIL import Image
 
-# I create a new folder where we will save the processed images
+# Creating a new folder where we will save the processed images
 image_folder = "logos/"
 processed_folder = "logos_processed/"
 os.makedirs(processed_folder, exist_ok=True)
@@ -159,7 +158,7 @@ print("All images saved and processed")
 Feature extraction with ResNet50 (pre-trained CNN model)
 - I decided to use Keras ResNet50 for feature extraction instead of PyTorch, because I had better results with it
 - ResNet50 model processes images and extracts feature vectors for each logo
-- We store the vectors in a NumPy array
+- Storing the vectors in a NumPy array
 
 ![extract_specs_example](https://github.com/user-attachments/assets/e6ca07d8-aaa5-4f88-9990-2c806b1e61cc)
 
@@ -180,10 +179,10 @@ from tqdm import tqdm
 img_height, img_width = 224, 224
 processed_folder = "logos_processed/"
 
-# Load pre-trained ResNet50 (without top layers)
+# Load pre-trained ResNet50
 resnet_model = ResNet50(include_top=False, input_shape=(img_height, img_width, 3), pooling='avg', weights='imagenet')
 
-# Freeze all layers (like in your Keras example)
+# Freeze all layers
 resnet_model.trainable = False
 
 # Function to extract features
@@ -193,11 +192,11 @@ def extract_features(image_path):
         img = load_img(image_path, target_size=(img_height, img_width))
         img_array = img_to_array(img)
         img_array = np.expand_dims(img_array, axis=0)
-        img_array = preprocess_input(img_array)  # Apply ResNet preprocessing
+        img_array = preprocess_input(img_array)  # Apply ResNet processing
 
         # Extract features
         features = resnet_model.predict(img_array)
-        return features.flatten()  # Flatten to 1D vector
+        return features.flatten()
     except Exception as e:
         print(f"Error processing {image_path}: {e}")
         return None
@@ -218,7 +217,7 @@ print("Embeddings saved successfully!")
 ### **K-means algorithm**
 Similar logo search
 - First method: After obtaining the feature vectors, I used cosine distance to find similar logos
-    - using this method, I could tell from the results that the classification was not great, because I saw in the same cluster, car logos like mazda and infiniti which should not be together
+    - using this method, I could tell from the results that the classification was not great, because I saw in the same cluster, logos like mazda and infiniti which should not be together
 - So, I went to try another method. I implemented a clustering algorithm, more specific K-means clustering, where I approximated a number of 500 clusters for the total of 3415 images, because I can also have a cluster with a single image inside.
 
 ![k-means_clustering](https://github.com/user-attachments/assets/d561298a-0470-433c-ab54-483b9ffe1d44)
@@ -256,7 +255,7 @@ print("K-Means clustering completed!")
 ---
 ## Final results
 
-Printing_results_script:
+Main_printing_results_script:
 
 ```bash
 import numpy as np
